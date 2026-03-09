@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Client Side Validation Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+        .success {
+            color: green;
+        }
+        input {
+            display: block;
+            margin-bottom: 10px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Registration Form</h2>
+
+<form id="myForm">
+    <label>Name:</label>
+    <input type="text" id="name">
+    <span class="error" id="nameError"></span>
+
+    <label>Email:</label>
+    <input type="text" id="email">
+    <span class="error" id="emailError"></span>
+
+    <label>Password:</label>
+    <input type="password" id="password">
+    <span class="error" id="passwordError"></span>
+
+    <label>Confirm Password:</label>
+    <input type="password" id="confirmPassword">
+    <span class="error" id="confirmPasswordError"></span>
+
+    <button type="submit">Submit</button>
+</form>
+
+<p id="successMessage" class="success"></p>
+
+<script>
+    const form = document.getElementById("myForm");
+
+    const nameInput = document.getElementById("name");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const confirmPasswordInput = document.getElementById("confirmPassword");
+
+    // Blur event (when user leaves field)
+    nameInput.addEventListener("blur", function() {
+        if (nameInput.value.trim() == "") {
+            document.getElementById("nameError").textContent = "Name is required";
+        } else {
+            document.getElementById("nameError").textContent = "";
+        }
+    });
+
+    // Input event (real-time validation)
+    emailInput.addEventListener("input", function() {
+        const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+        if (!emailPattern.test(emailInput.value)) {
+            document.getElementById("emailError").textContent = "Invalid email format";
+        } else {
+            document.getElementById("emailError").textContent = "";
+        }
+    });
+
+    // Submit event
+    form.addEventListener("submit", function(event) {
+        event.preventDefault(); // prevent form submission
+
+        let isValid = true;
+
+        // Password length check
+        if (passwordInput.value.length < 6) {
+            document.getElementById("passwordError").textContent = 
+                "Password must be at least 6 characters";
+            isValid = false;
+        } else {
+            document.getElementById("passwordError").textContent = "";
+        }
+
+        // Confirm password check
+        if (passwordInput.value !== confirmPasswordInput.value) {
+            document.getElementById("confirmPasswordError").textContent = 
+                "Passwords do not match";
+            isValid = false;
+        } else {
+            document.getElementById("confirmPasswordError").textContent = "";
+        }
+
+        if (isValid) {
+            document.getElementById("successMessage").textContent = 
+                "Form submitted successfully!";
+        }
+    });
+</script>
+
+</body>
+</html>
