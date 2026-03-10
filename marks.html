@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marks Validation</title>
+    <style>
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+        input {
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Enter Marks (0 to 100)</h2>
+
+<form id="marksForm">
+    <label for="marks">Marks:</label>
+    <input type="text" id="marks" name="marks" placeholder="Enter marks between 0 and 100">
+    <span class="error" id="errorMessage"></span>
+    <br>
+    <button type="submit">Submit</button>
+</form>
+
+<script>
+    // Get references to form and input elements
+    const form = document.getElementById('marksForm');
+    const marksInput = document.getElementById('marks');
+    const errorMessage = document.getElementById('errorMessage');
+
+    // Add event listener to validate on form submission
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent form from submitting
+
+        const marks = marksInput.value;
+        const marksNum = Number(marks);
+
+        // Clear any previous error message
+        errorMessage.textContent = '';
+
+        // Check if the value is a valid number between 0 and 100
+        if (isNaN(marksNum) || marksNum < 0 || marksNum > 100 || marks === '') {
+            errorMessage.textContent = 'Please enter a valid number between 0 and 100.';
+        } else {
+            errorMessage.textContent = 'Marks are valid!';
+            errorMessage.style.color = 'green';
+        }
+    });
+</script>
+
+</body>
+</html>	  
